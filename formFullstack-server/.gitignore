@@ -1,0 +1,3 @@
+**/node_modules
+# formFullstack-server/node_modules/
+*.yaml
