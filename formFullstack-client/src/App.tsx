@@ -1,7 +1,8 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import './App.css'
 
 function App() {
+
   const [formState, setFormState] = useState(
     {
       name: "",
@@ -9,6 +10,7 @@ function App() {
       file: ""
     }
   )
+  const [statusConnection, setStatusConnection] = useState({ connection: null })
 
   const onInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const name = e.target.name
@@ -23,6 +25,12 @@ function App() {
 
     console.log(formState)
   }
+
+  useEffect(() => {
+    fetch('http://127.0.0.1:5000/api')
+      .then(res => res.json())
+      .then(data => setStatusConnection(data))
+  }, [])
 
   return (
     <>
@@ -65,6 +73,8 @@ function App() {
         <button>Enviar</button>
 
       </form>
+
+      <p>Estado de conección con el servidor: {statusConnection.connection}</p>
     </>
   )
 }
