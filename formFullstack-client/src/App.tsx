@@ -6,8 +6,7 @@ function App() {
   const [formState, setFormState] = useState(
     {
       name: "",
-      favoriteNumber: 0,
-      file: ""
+      favoriteNumber: 0
     }
   )
   const [statusConnection, setStatusConnection] = useState({ connection: null })
@@ -20,14 +19,24 @@ function App() {
     setFormState({ ...formState, [name]: value })
   }
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmitSimplePost = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
 
-    console.log(formState)
+    fetch('http://localhost:5000/api/solicitud-post.simple', {
+      method: 'POST',
+      body: JSON.stringify(formState),
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+      .then(res => res.json())
+      .then(data => console.log('data: ', data))
+      .catch(error => console.log(error))
+
   }
 
   useEffect(() => {
-    fetch('http://127.0.0.1:5000/api')
+    fetch('http://localhost:5000/api')
       .then(res => res.json())
       .then(data => setStatusConnection(data))
   }, [])
@@ -35,10 +44,13 @@ function App() {
   return (
     <>
       <h1>Formulario</h1>
+      <p>Estado de la conección con el servidor: {statusConnection.connection}</p>
 
-      <form onSubmit={handleSubmit}>
+      <h2>Post simple (JSON)</h2>
 
-        <div>
+      <form onSubmit={handleSubmitSimplePost}>
+
+        <section>
           <label htmlFor='name'>Nombre</label>
           <input
             type='text'
@@ -47,9 +59,9 @@ function App() {
             value={formState.name}
             onChange={onInputChange}
           />
-        </div>
+        </section>
 
-        <div>
+        <section>
           <label htmlFor='name'>Número favorito</label>
           <input
             type='number'
@@ -58,23 +70,11 @@ function App() {
             value={formState.favoriteNumber}
             onChange={onInputChange}
           />
-        </div>
-
-        <div>
-          <label htmlFor='picture'>Archivo de imagen</label>
-          <input
-            type='file'
-            name='file'
-            value={formState.file}
-            onChange={onInputChange}
-          />
-        </div>
+        </section>
 
         <button>Enviar</button>
 
       </form>
-
-      <p>Estado de conección con el servidor: {statusConnection.connection}</p>
     </>
   )
 }
