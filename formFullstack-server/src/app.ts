@@ -29,12 +29,39 @@ app.use("/api-docs",swaggerUi.serve, swaggerUi.setup(swaggerSpecification))
  */
 app.get("/api",(req, res)=>res.send({"connection": "ok"}))
 
+/**
+ * @openapi
+ * /api/solicitud-post.simple:
+ *  post:
+ *    tags:
+ *      - Json
+ *    summary: Agrega un nuevo usuario
+ *    description: Agrega un nuevo usuario
+ *    operationId: addUser
+ *    requestBody:
+ *      required: true
+ *      description: Datos necesarios para crear un nuevo usuario
+ *      content:
+ *        'application/json':
+ *          schema:
+ *            type: object
+ *            properties:
+ *              name:
+ *                type: string
+ *              favoriteNumber:
+ *                type: integer
+ *    responses:
+ *      201:
+ *        description: "{ simplePost: [{name: '', favoriteNumber: 0}] }"
+ *      500:
+ *        description: Error interno del servidor
+ */
 app.post("/api/solicitud-post.simple",(req, res)=>{
   const data: Object= req.body
   console.log(data)
   simplePost.push(data)
 
-  res.send({"solicitud-post.simple": "ok", simplePost})
+  res.send({simplePost})
 })
 
 app.post("/api/solicitud-post-file", upload.single("image"), (req,res) => {
