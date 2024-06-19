@@ -86,7 +86,7 @@ app.post("/api/solicitud-post.simple",(req, res)=>{
   res.send({simplePost})
 })
 
-app.post("/api/solicitud-post-file", upload.single("image"), (req,res) => {
+app.post("/api/solicitud-post-singleFile", upload.single("image"), (req,res) => {
   console.log('body: ', req.body)
   console.log('file: ', req.file)
 
@@ -94,7 +94,7 @@ app.post("/api/solicitud-post-file", upload.single("image"), (req,res) => {
     fs.renameSync(req.file.path, `./images/${req.file.originalname}`)
   }
 
-  res.send({"solicitud-post-file": "ok"})
+  res.send({"solicitud-post-singleFile": "ok"})
   res.status(201)
 })
 
