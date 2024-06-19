@@ -16,6 +16,28 @@ app.use("/api-docs",swaggerUi.serve, swaggerUi.setup(swaggerSpecification))
 
 /**
  * @openapi
+ * components:
+ *    schemas:
+ *      User:
+ *        type: object
+ *        properties:
+ *          name:
+ *            type: string
+ *            description: username
+ *            required: true
+ *          favoriteNumber:
+ *            type: integer
+ *            description: user's favorite number
+ *            required: true
+ *          image: 
+ *            type: string
+ *            format: binary
+ *            description: user image
+ *          
+ */
+
+/**
+ * @openapi
  * /api:
  *  get:
  *    summary: Informa el estado de la comunicación
