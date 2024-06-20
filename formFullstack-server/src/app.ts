@@ -86,6 +86,28 @@ app.post("/api/solicitud-post.simple",(req, res)=>{
   res.send({simplePost})
 })
 
+/**
+ * @openapi
+ * /api/solicitud-post-singleFile:
+ *  post:
+ *    tags:
+ *      - File
+ *    summary: Agrega un nuevo usuario
+ *    description: Agrega un nuevo usuario
+ *    operationId: addUser
+ *    requestBody:
+ *      required: true
+ *      description: Datos necesarios para crear un nuevo usuario
+ *      content:
+ *        multipart/form-data:
+ *          schema:
+ *            $ref: '#/components/schemas/User'
+ *    responses:
+ *      200:
+ *        description: {"solicitud-post-file": "ok"}
+ *      500:
+ *        description: Error interno del servidor
+ */
 app.post("/api/solicitud-post-singleFile", upload.single("image"), (req,res) => {
   console.log('body: ', req.body)
   console.log('file: ', req.file)
